@@ -60,6 +60,9 @@ class NeuralNetwork():
         if not isinstance(x, torch.Tensor):
             x = torch.from_numpy(x.values).float()
 
+        if not isinstance(y, torch.Tensor):
+            y = torch.from_numpy(y.values).view(-1, 1)
+
         batch_size = x.shape[0]
 
         # gradient for weights going into the output layer
