@@ -42,5 +42,16 @@ class Data:
         self.data = pd.concat([self.data, columns_to_add_back], axis=1)
 
     def get_data(self):
-        return self.data
+        self.data = self.data.sample(frac=1, random_state=42).reset_index(drop=True)
+        split_index = int(len(self.data) * 0.7)     # 70% kept for training
+
+        training_set = self.data[:split_index]
+        testing_set = self.data[split_index:]
+
+        y_train = training_set[" loan_status"]
+        x_train = training_set.drop(" loan_status", axis=1)
+        y_test = testing_set[" loan_status"]
+        x_test = testing_set.drop(" loan_status", axis=1)
+
+        return x_train, y_train, x_test, y_test
 
