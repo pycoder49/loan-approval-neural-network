@@ -1,6 +1,12 @@
 import torch
 
 
+def accuracy(y_pred, y):
+    # calculating accuracy
+    y = torch.from_numpy(y.values).float().view(-1, 1)
+    return (y_pred == y).float().sum() / y_pred.shape[0] * 100
+
+
 def bce_loss(predictions, target):
     first_half = target * torch.log(predictions + 1e-8)
     second_half = (1 - target) * torch.log(1 - predictions + 1e-8)
@@ -17,8 +23,6 @@ def _sigmoid(z):
 
 class NeuralNetwork():
     def __init__(self, x):
-        x = torch.from_numpy(x.values).float()
-
         num_samples = x.shape[0]
         num_features = x.shape[1]
 
@@ -35,7 +39,7 @@ class NeuralNetwork():
             torch.zeros(15),            # bias for hidden layer 1
             torch.zeros(1)              # bias for output layer
         ]
-        self.learning_rate = 0.01
+        self.learning_rate = 0.5
 
     def forward(self, x):
         if not isinstance(x, torch.Tensor):
