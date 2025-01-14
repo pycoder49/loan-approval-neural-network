@@ -1,7 +1,7 @@
 import torch
 
 
-def bceloss(predictions, target):
+def bce_loss(predictions, target):
     first_half = target * torch.log(predictions + 1e-8)
     second_half = (1 - target) * torch.log(1 - predictions + 1e-8)
     return -torch.mean(first_half + second_half)
