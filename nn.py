@@ -3,7 +3,6 @@ import torch
 
 def accuracy(y_pred, y):
     # calculating accuracy
-    y = torch.from_numpy(y.values).float().view(-1, 1)
     return (y_pred == y).float().sum() / y_pred.shape[0] * 100
 
 
